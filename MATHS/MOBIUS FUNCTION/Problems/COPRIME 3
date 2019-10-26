@@ -1,0 +1,127 @@
+Question Link : https://www.codechef.com/problems/COPRIME3
+
+LOGIC :
+So lets say we have a sequence of numbers 1, 2, 3, … 29, 30 and we want to find all pairs that have GCD = 1.
+
+1 says all possible pairs (1, 2) (1, 3) … (2, 4) … (3, 6) … (29, 30) here have a GCD of 1. (Notice here that some pairs don’t actually have GCD of 1 we will exclude the ones that dont have GCD=1 in later steps)
+
+2 comes along and tells 1, you cannot include pairs like (2,4) (2, 6) … (4, 8) … (6, 12) … (28, 30) because they have a GCD of 2 (Notice here that some pairs don’t actually have GCD of 2 we will exclude the ones that dont have GCD=2 in later steps). So now we subtract all these pairs. These are basically all multiples of 2 between 1 and 30.
+
+3 also comes along and tells 1, you cannot include pairs like (3, 6) (6, 9) … (6, 12) … (9, 18) … (27, 30) because they have a GCD of 3. So 3 removes all these pairs.
+
+4 now realizes that it does not need to remove the pairs from what 1 has claimed because 2 already removed it for him. Pairs such as (4, 8), (8, 12) were already excluded by 2.
+
+5 Five also removes all its pair from what 1 has claimed.
+
+6 now has an interesting decision to make. 2 excluded multiples of 6 and removed them. 3 also excluded multiples of 6 and removed them. So now 6 says, I have been removed twice by 2 and 3, so I must include all my pairs again. So he includes pairs like (6, 12) (6, 18) … (12, 18) … (24, 30) to balance the double subtraction by 2 and 3
+
+… this goes on until each number has decided to either exclude/include its multiples.
+
+Do you see the pattern here? If you notice this directly corresponds to the Mobius values
+
+mobius (1) = +1 (Include)μ(1)=+1 (Include)
+mobius (2) = -1 (Exclude)μ(2)=−1 (Exclude)
+mobius (3) = -1 (Exclude)μ(3)=−1 (Exclude)
+mobius (4) =  0 (Do Nothing)
+mobius (5) = -1 (Exclude)μ(5)=−1 (Exclude)
+mobius (6) = +1 (Include)μ(6)=+1 (Include)
+
+Therefore sol is mobius(x) * F(x) where F(x) is count of numbers that are divisible by x in the seq
+
+Implemented code
+
+/*
+ 
+ 
+  author:@Doremonn
+  created on :26/10/2019
+ 
+ Note : Modular Exponentiation , nCrModPFermats code are from gfg
+ DSU , BFS , DFS codes are from hackerearth
+ 
+ 
+*/
+#include <bits/stdc++.h>
+using namespace std;
+ 
+typedef long long int ll;
+
+vector<ll> adj[1000001]; 
+
+ll i;
+#define mod 1000000007
+#define pb push_back
+#define endl cout<<"\n";
+#define prt1(a) cout<<a<<" "
+#define prt2(a,b) cout<<a<<" "<<b<<" "
+#define prt3(a,b,c) cout<<a<<" "<<b<<" "<<c<<" "
+#define rep(i,st,end) for( i=st;i<end;i++)
+#define repv(i,st,end) for( i=st;i>=end;i--)
+#define fio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+
+ 
+ll arr[1000000];         // store power of 2 
+ll freq[1000000]={0};
+ll ans[1000000];
+ll mobius[1000000];
+ll prime[1000000]={0};          // 0 rep prime
+void precompute()
+{
+    ll i,j;
+    fill(mobius,mobius+1000000,1);     
+    for(i=2;i<=1000000;i++)
+    {
+     if(!prime[i])
+     {
+        for(j=i;j<=1000000;j+=i)
+        {
+            if(j!=i)
+                prime[j]=1;
+            if(j %(i*i)==0)
+                mobius[j]=0;
+            else 
+                mobius[j]=mobius[j]*-1;
+
+        }
+     }
+    }
+}
+
+int main() {
+  ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    precompute();    // to cal mobius function 
+    ll t,i,n;
+      //  cin>>t;
+    t=1;
+    memset(freq,0,sizeof(freq));
+    while(t--)
+    {
+        cin>>n;
+        ll arr[n];
+        rep(i,0,n)
+        {
+          cin>>arr[i];
+          freq[arr[i]]++;
+
+        }
+        rep(i,1,1000000+1)
+        {
+          for(ll j=2*i;j<=1000000;j+=i)
+            freq[i]=freq[i]+freq[j];
+        }
+        ll ans=0;
+        rep(i,1,1000001)
+        ans=ans+(mobius[i]*freq[i]*(freq[i]-1)*(freq[i]-2))/6;
+        prt1(ans);
+        endl;
+        }
+    
+    
+    
+    return 0;
+}
+
+
+
+
