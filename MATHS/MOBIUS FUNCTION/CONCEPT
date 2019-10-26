@@ -7,3 +7,29 @@ Refer to this article : https://crypto.stanford.edu/pbc/notes/numbertheory/mobiu
  
   How does it satisfies Inclusion - Exclusion principle .......
   Refer to this article https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle
+
+MOBIUS FUNCTION CALCULATION CODE 
+
+ll mobius[100005];
+ll prime[100005]={0};          // 0 rep prime
+void precompute()
+{
+    ll i,j;
+    fill(mobius,mobius+100005,1);     
+    for(i=2;i<100005;i++)
+    {
+     if(!prime[i])
+     {
+        for(j=i;j<100005;j+=i)
+        {
+            if(j!=i)
+                prime[j]=1;
+            if(j %(i*i)==0)
+                mobius[j]=0;
+            else 
+                mobius[j]=mobius[j]*(-1);
+
+        }
+     }
+    }
+    }
