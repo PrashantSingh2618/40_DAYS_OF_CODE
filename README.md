@@ -8,4 +8,4 @@ LIST OF ALGORITHMS COVERED
 
 1 ) SIEVE (Segmented Sieve )\
 2) MATHS ( Number Theory , Mobius Function )\
-3) Segment Tree\
+3) Segment Tree
