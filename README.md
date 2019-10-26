@@ -2,3 +2,9 @@
 
 An algorithmic repository of different Data Structures and Algorithms . It contains questions from different platform and their 
 accepted codes . 
+
+
+LIST OF ALGORITHMS COVERED
+
+1 ) SIEVE (Segmented Sieve )
+2) MATHS ( Number Theory , Mobius Function )
