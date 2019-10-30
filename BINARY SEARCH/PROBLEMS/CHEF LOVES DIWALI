@@ -1,0 +1,62 @@
+QUESTION LINK: https://www.codechef.com/COX2019/problems/CHESHCYC/
+************************************************************************************************************
+
+CODE :
+
+/*
+ author : @Doraemonn
+
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define rep(i,a,b) for(int i = a; i < b; i++)
+typedef long long int LL;
+vector<int > primes;
+
+LL f(LL x) {
+	int sz = primes.size();
+	LL res = 0;
+	rep(i,1,1<<sz) {
+		LL p = 1;
+		int sign = -1;
+		rep(j,0,sz) if((i>>j)&1) {
+			p *= primes[j];
+			sign *= -1;
+		}
+		res += sign * (x/p);
+	}
+	return res;
+}
+LL solve(LL k) {
+	LL ans = 1;
+	LL lo = 1;
+	LL hi = 1000000000000000000LL;
+	while(lo <= hi) {
+		LL mi = (lo + hi) >> 1;
+		if(f(mi) >= k) {
+			ans = mi;
+			hi = mi-1;
+		} else {
+			lo = mi+1;
+		}
+	}
+	return ans;
+}
+int main() {
+	int t;
+   cin>>t;
+	while(t--) {
+		string s;
+		cin >> s;
+		LL k;
+		cin >> k;
+		primes.clear();
+		rep(i,0,s.size()) if(s[i] == '1') {
+			primes.push_back(i+1);
+		}
+		cout << solve(k) << endl;
+	}
+	return 0;
+}
