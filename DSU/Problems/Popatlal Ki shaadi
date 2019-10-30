@@ -1,0 +1,182 @@
+Question Link : https://www.spoj.com/problems/CHUNK2/
+*******************************************************************************************************
+
+Implemented code :
+
+
+/*
+ 
+ 
+  author:@Doremonn
+  created on :31/10/2019
+ 
+ Note : Modular Exponentiation , nCrModPFermats code are from gfg
+ DSU , BFS , DFS codes are from hackerearth
+ 
+ 
+*/
+#include <bits/stdc++.h>
+using namespace std;
+ 
+typedef long long int ll;
+ 
+vector<ll> adj[1000001]; 
+ 
+ll i;
+#define mod 1000000007
+#define pb push_back
+#define endl cout<<"\n";
+#define prt1(a) cout<<a<<" "
+#define prt2(a,b) cout<<a<<" "<<b<<" "
+#define prt3(a,b,c) cout<<a<<" "<<b<<" "<<c<<" "
+#define rep(i,st,end) for( i=st;i<end;i++)
+#define repv(i,st,end) for( i=st;i>=end;i--)
+#define fio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+ 
+ 
+ 
+// ************ DSU  *******************
+ 
+// to find root  call using root(arr,element)
+ 
+int root (ll Arr[ ] ,ll i)
+{
+    while(Arr[ i ] != i)
+    {
+        Arr[ i ] = Arr[ Arr[ i ] ] ; 
+i = Arr[ i ]; 
+    }
+return i;
+}
+ 
+  // to do union  initilize size[] by 1 
+void weighted_union(ll Arr[ ],ll size[ ],ll A,ll B)
+{
+    ll root_A = root(Arr,A);
+    ll root_B = root(Arr,B);
+    if(size[root_A] < size[root_B ])
+    {
+Arr[ root_A ] = Arr[root_B];
+size[root_B] += size[root_A];
+}
+    else
+    {
+Arr[ root_B ] = Arr[root_A];
+size[root_A] += size[root_B];
+}
+ 
+}
+ 
+ 
+ 
+//******************************* CODE BEGINS FROM HERE   ****************************
+//*************************************************************************************
+ 
+vector<ll>v;
+ 
+void simpleSieve(int limit, vector<int> &prime) 
+{ 
+    bool mark[limit+1]; 
+    memset(mark, true, sizeof(mark)); 
+  
+    for (int p=2; p*p<limit; p++) 
+    { 
+        if (mark[p] == true) 
+        { 
+            for (int i=p*2; i<limit; i+=p) 
+                mark[i] = false; 
+        } 
+    } 
+    for (int p=2; p<limit; p++) 
+    { 
+        if (mark[p] == true) 
+        { 
+            prime.push_back(p); 
+            v.push_back(p);
+        } 
+    } 
+} 
+void segmentedSieve(int n) 
+{ 
+  
+    int limit = floor(sqrt(n))+1; 
+    vector<int> prime;  
+    simpleSieve(limit, prime);  
+  
+    
+    int low = limit; 
+    int high = 2*limit; 
+ 
+    while (low < n) 
+    { 
+        if (high >= n)  
+           high = n; 
+         
+        bool mark[limit+1]; 
+        memset(mark, true, sizeof(mark)); 
+ 
+        for (int i = 0; i < prime.size(); i++) 
+        {
+            int loLim = floor(low/prime[i]) * prime[i]; 
+            if (loLim < low) 
+                loLim += prime[i]; 
+  
+            for (int j=loLim; j<high; j+=prime[i]) 
+                mark[j-low] = false; 
+        } 
+        for (int i = low; i<high; i++) 
+            if (mark[i - low] == true) 
+                v.push_back(i); 
+        low = low + limit; 
+        high = high + limit; 
+    } 
+} 
+ 
+ 
+int main(){
+    fio;
+    ll tc,n,m,k,l,i,x,y;
+    
+    cin>>tc;
+    //tc=1;
+    segmentedSieve(10000000);
+ 
+    while(tc--)
+    {
+    cin>>n>>m;
+    ll arr[n],size[n];
+    rep(i,0,n)
+    {
+        size[i]=1;
+        arr[i]=i;
+    }
+    rep(i,0,m)
+    {
+        cin>>x>>y;
+        x--;
+        y--;
+        weighted_union(arr,size,x,y);
+    }
+    ll Max=0;
+    // rep(i,0,n)
+    // prt1(arr[i]);
+    // endl;
+    map<ll,ll>mp;
+    rep(i,0,n)
+    {
+        ll R=root(arr,i);
+        mp[R]++;
+        Max=max(Max,mp[R]);
+        
+    }
+    if(Max==1)
+    prt1(-1);
+    else
+    prt1(v[Max-1]);
+    endl;
+       
+    }
+    return 0;
+} 
+ 
+ 
