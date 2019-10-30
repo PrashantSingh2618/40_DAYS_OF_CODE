@@ -1,0 +1,34 @@
+// ************ DSU  *******************
+
+// to find root -> call function using root(arr,element)
+
+int root (int Arr[ ] ,int i)
+{
+    while(Arr[ i ] != i)
+    {
+        Arr[ i ] = Arr[ Arr[ i ] ] ; 
+i = Arr[ i ]; 
+    }
+return i;
+}
+
+  // to do union -> initilize size[] by 1 and Arr[i]=i then pass in function
+  
+  
+void weighted_union(int Arr[ ],int size[ ],int A,int B)
+{
+    int root_A = root(Arr,A);
+    int root_B = root(Arr,B);
+    if(size[root_A] < size[root_B ])
+    {
+Arr[ root_A ] = Arr[root_B];
+size[root_B] += size[root_A];
+}
+    else
+    {
+Arr[ root_B ] = Arr[root_A];
+size[root_A] += size[root_B];
+}
+
+}
+
