@@ -9,4 +9,5 @@ LIST OF ALGORITHMS COVERED
 1 ) SIEVE (Segmented Sieve )\
 2) MATHS ( Number Theory , Mobius Function )\
 3) Segment Tree\
-4) Binary Search
+4) Binary Search\
+5) DSU ( Disjoint Set Union )
