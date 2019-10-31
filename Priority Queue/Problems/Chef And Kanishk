@@ -1,0 +1,100 @@
+Question Link : https://www.codechef.com/COX2019/problems/KANICHEF/
+*************************************************************************************************
+
+Implemented Code :
+
+/*
+ 
+ 
+  author:@Prashant Singh
+  created on :27/10/2019
+ 
+ 
+ 
+*/
+#include <bits/stdc++.h>
+using namespace std;
+ 
+typedef long long int ll;
+ 
+#define mod 1000000007
+#define pb push_back
+#define endl cout<<"\n";
+#define prt1(a) cout<<a<<" ";
+#define prt2(a,b) cout<<a<<" "<<b<<" ";
+#define prt3(a,b,c) cout<<a<<" "<<b<<" "<<c<<" ";
+#define rep(i,st,end) for(int i=st;i<(int)end;i++)
+#define repv(i,st,end) for(int i=st;i>=end;i--)
+#define fio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+ 
+struct Data
+{
+  ll v;
+  ll index;
+};
+struct cmp
+{
+  bool operator()(Data p1,Data p2)
+  {
+      if(p1.v==p2.v)
+      return p1.index>p2.index;
+    return p1.v<p2.v;
+  }
+};
+int main()
+ {
+  fio;
+     ll i,tc,n,k,t,j,l,a,b,c,m;
+      
+     //cin>>tc;
+      tc=1;
+      
+      while(tc--)
+      {
+        cin>>n>>k;
+        ll x;
+        priority_queue<Data,vector<Data>,cmp>pq,v;
+        rep(i,1,n+1)
+        {
+          cin>>x;
+          Data d;
+          d.v=x;
+          d.index=i;
+          pq.push(d);
+        }
+       // cout<<"INITIAL PRIORITY QUEUE IS \n";
+        //  v=pq;
+        //   while(!v.empty())
+        //   {
+        //       cout<<v.top().v<<" "<<v.top().index;
+        //       v.pop();
+        //       endl;
+        //   }
+        while(k--)
+        {
+          Data d=pq.top();
+          pq.pop();
+          prt1(d.index);
+          d.v=d.v-1;
+        //   cout<<"\nPriority queue is\n";
+        //   v=pq;
+        //   while(!v.empty())
+        //   {
+        //       cout<<v.top().v<<" "<<v.top().index<<"\n";
+        //       v.pop();
+        //       endl;
+        //   }
+          
+          pq.push(d);
+
+        }
+        endl;
+
+        
+
+ 
+      }
+ 
+    
+  return 0;
+}
