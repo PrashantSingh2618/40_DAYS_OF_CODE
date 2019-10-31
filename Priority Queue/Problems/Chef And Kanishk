@@ -1,6 +1,9 @@
 Question Link : https://www.codechef.com/COX2019/problems/KANICHEF/
 *************************************************************************************************
-
+Logic : Make priority queue in dec order of balls and if equal then inc order of index . Then always plpay (print) 
+        highest value index 
+        
+        
 Implemented Code :
 
 /*
