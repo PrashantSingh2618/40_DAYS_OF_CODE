@@ -10,4 +10,5 @@ LIST OF ALGORITHMS COVERED
 2) MATHS ( Number Theory , Mobius Function )\
 3) Segment Tree\
 4) Binary Search\
-5) DSU ( Disjoint Set Union )
+5) DSU ( Disjoint Set Union )\
+6) Priority Queue
