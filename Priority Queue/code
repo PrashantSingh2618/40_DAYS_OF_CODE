@@ -1,0 +1,30 @@
+Priority Queue with Structure 
+
+struct Data
+{
+  ll v;
+  ll index;
+};
+struct cmp
+{
+  bool operator()(Data p1,Data p2)              // fill data in dec order acc to 1st if 1st ie equal then inc order of 2nd
+  {
+      if(p1.v==p2.v)
+      return p1.index>p2.index;
+    return p1.v<p2.v;
+  }
+};
+
+int main()
+ {
+       priority_queue<Data,vector<Data>,cmp>pq,v;
+        rep(i,1,n+1)
+        {
+          cin>>x;
+          Data d;
+          d.v=x;
+          d.index=i;
+          pq.push(d);
+        }
+        return 0;
+ }
